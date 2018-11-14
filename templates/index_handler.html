@@ -1,0 +1,89 @@
+{% extends "base_tmp.html" %}
+{% load staticfiles %}
+{% block carousel %}
+    {% include "carouselT.html" %}
+{% endblock %}
+{% block css %}
+    {% static 'css/page.css' %}
+{% endblock %}
+{% block content %}
+    <!--文章列表-->
+    <section id="artlist" style="margin-top:0px">
+        <div class="container">
+            <div class="row wow fadeIn" data-wow-delay="0.6s">
+                <div class="col-md-12 table-responsive">
+                    <table class="table text-left table-bordered" id="arttags">
+                        <tr>
+                            <td style="width:7%;">文章标签</td>
+                            <td style="width:93%;">
+                                <a class="label label-info" id="curtag0" href="{{ url }}?t=0"><span
+                                        class="glyphicon glyphicon-tag"></span>&nbsp;全部</a>
+                                {% for tag in tags %}
+                                    <a class="label label-info" id="curtag{{ tag.id }}"
+                                       href="{{ url }}?t={{ tag.t_id }}"
+                                       style="position: relative;margin-top: 3px"><span
+                                            class="glyphicon glyphicon-tag"></span>&nbsp;{{ tag.t_name }}</a>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                {% for v in  data.object_list %}
+                    <div class="col-md-3">
+                        <div class="artlist text-center">
+
+                            <img data-original="{{ v.a_img }}" style="width:262px;height:250px;"
+                                 class="img-responsive center-block lazy" alt="">
+                            <br>
+                            <div class="text-left" style="margin-left:auto;margin-right:auto;width:250px;">
+                                <span style="color: #0f0f0f;font-size: 18px; font-weight: bold">{{ v.a_title }}</span><br>
+                                <br>
+                                <p style="height: 50px;overflow:hidden;text-overflow: ellipsis;white-space: nowrap">{{ v.a_info }}</p>
+                                <p>作者:{{ v.a_authorname }}</p>
+                            </div>
+
+                            <a href="{% url 'books:detail' v.a_id %}" class="btn btn-primary " target="_blank"
+                               role="button">
+                                <span class="glyphicon glyphicon-eye-open"></span>&nbsp;阅读</a>
+                        </div>
+                    </div>
+                {% endfor %}
+
+                <div class="pageturn">
+                    <ul class="pagelist">
+                        {% if data.has_previous %}
+                            <li class="long"><a href="?{{ data.previous_page_number.querystring }}">上一页</a>
+                            </li>
+                        {% endif %}
+                        {% for page in data.pages %}
+                            {% if page %}
+                                {% ifequal page data.number %}
+                                    <li class="active"><a href="?{{ page.querystring }}">{{ page }}</a></li>
+                                {% else %}
+                                    <li><a href="?{{ page.querystring }}" class="page">{{ page }}</a></li>
+                                {% endifequal %}
+                            {% else %}
+                                <li class="none"><a href="">...</a></li>
+                            {% endif %}
+                        {% endfor %}
+                        {% if data.has_next %}
+                            <li class="long"><a
+                                    href="?{{ data.next_page_number.querystring }}">下一页</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block js %}
+    <script>
+        $(document).ready(function () {
+            $("#curtag{{t}}").attr("class", "label label-danger");
+        });
+    </script>
+
+
+{% endblock %}

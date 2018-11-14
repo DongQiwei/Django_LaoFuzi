@@ -1,0 +1,53 @@
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'css/swiper.min.css' %}">
+<style>
+    .swiper-container {
+        position: relative;
+        margin-top: 80px;
+        width: 1400px;
+        height: 500px;
+    }
+
+    li {
+        list-style-type: none;
+        margin: 0 auto;
+    }
+
+    .header button {
+        float: right;
+        color: white;
+    }
+
+
+
+</style>
+
+<div class="swiper-container">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide"><img style="width: 1200px ;height: 600px; margin-left: 95px" src="{% static 'images/01.jpg' %}"></div>
+        <div class="swiper-slide"><img style="width: 1200px ;height: 500px; margin-left: 95px" src="{% static 'images/02.jpg' %}"></div>
+        <div class="swiper-slide"><img style="width: 1200px ;height: 500px; margin-left: 95px" src="{% static 'images/03.jpg' %}"></div>
+        <div class="swiper-slide"><img style="width: 1200px ;height: 500px; margin-left: 95px" src="{% static 'images/04.jpg' %}"></div>
+    </div>
+    <!-- 如果需要分页器 -->
+    <div class="swiper-pagination"></div>
+</div>
+
+<script src="{% static 'js/swiper.min.js' %}"></script>
+<script>
+    var mySwiper = new Swiper('.swiper-container', {
+        loop: true, // 循环模式选项
+        autoplay: true,
+        // 如果需要分页器
+        pagination: {
+            el: '.swiper-pagination',
+        },
+
+        // 如果需要前进后退按钮
+        navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+        },
+
+    })
+</script>
